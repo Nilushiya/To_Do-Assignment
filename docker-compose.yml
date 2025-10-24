@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: todo-db
+    environment:
+      - POSTGRES_DB=todo_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - todo-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.0
+    container_name: todo-keycloak
+    command: start-dev --hostname http://keycloak:8080 --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    networks:
+      - todo-net
+
+  backend:
+    build: ./todo
+    container_name: todo-backend
+    ports:
+      - "8085:8081"
+    depends_on:
+      - db
+      - keycloak
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/todo_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - todo-net
+
+volumes:
+  pgdata:
+
+networks:
+  todo-net:
