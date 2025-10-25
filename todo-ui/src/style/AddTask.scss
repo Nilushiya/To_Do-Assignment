@@ -1,0 +1,96 @@
+.add-task-container {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    border-right: 3px solid rgb(192, 188, 182);
+    margin: 30px 0 20px 20px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+
+    form{
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        height: 92vh;
+
+        h2{
+            padding: 10px;
+            align-self: start;
+        }
+
+         input, textarea {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            border: none;
+            box-shadow:1px 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+         button {
+            width: 100px;
+            align-self: end;
+            padding: 12px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-right: 10px;
+
+            &:hover {
+            background-color: #1a5ed8;
+            }
+        }
+        .logout-section {
+            border-radius: 50px;
+            position: fixed;        
+            bottom: 60px;              
+            left: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #0e0909;
+            font-weight: 600;
+            z-index: 999;
+
+            .logout-text {
+                opacity: 0;       
+                transition: opacity 0.3s ease;
+            }
+
+            &:hover .logout-text {
+                opacity: 1;          
+            }
+
+            .logout-icon {
+                width: 30px;
+                height: 30px;
+                padding: 10px;
+                transition: transform 0.2s ease;
+                color: black;
+                background-color: #1a5ed8;
+                border-radius: 50px;
+            }
+
+            &:hover .logout-icon {
+                transform: scale(1.2); 
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        margin: 0px;
+        height: 100vh;
+        border:none
+  }
+
+}

@@ -23,9 +23,6 @@ public class TaskServiceImp implements TaskService{
     @Override
     public List<Task> getRecentTasks(String userId) {
         List<Task> tasks = taskRepository.findTop5ByUserIdAndStatusOrderByCreatedAtDesc(userId, Status.PENDING);
-        if(tasks.isEmpty()){
-            throw new TaskOperationException("No assign tasks");
-        }
         return tasks;
     }
 
