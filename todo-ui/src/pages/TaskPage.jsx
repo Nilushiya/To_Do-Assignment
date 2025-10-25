@@ -72,7 +72,6 @@ const TaskPage = () => {
             <DisplayTasks tasks={tasks} onComplete={completeTask} />
         </div>
 
-      {/* Toast Container should be inside your main component */}
       <ToastContainer 
         position="top-right"
         autoClose={2500}

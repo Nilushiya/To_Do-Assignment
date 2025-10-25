@@ -6,15 +6,14 @@ const AuthRedirect = () => {
 
   useEffect(() => {
     if (initialized && !keycloak.authenticated) {
-      keycloak.login(); // Redirects directly to Keycloak login page
+      keycloak.login();
     }
   }, [initialized, keycloak]);
 
   if (!initialized || !keycloak.authenticated) {
-    return <div>Redirecting to login...</div>; // optional loading screen
+    return <div>Redirecting to login...</div>; 
   }
 
-  // User is authenticated, redirect to your app
   window.location.href = '/tasks';
   return null;
 };
