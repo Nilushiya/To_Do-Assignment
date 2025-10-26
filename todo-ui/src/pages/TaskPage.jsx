@@ -40,10 +40,15 @@ const TaskPage = () => {
   }, [keycloak.authenticated]);
 
   const addTask = async (task) => {
+    console.log("add task:", task);
+    if (!task.title.trim() || !task.description.trim()) {
+      toast.error('Add required fields');
+      return;
+    }
     try {
       await refreshTokenOrLogin();
       const res = await addTaskApi(task, keycloak.token, keycloak);
-      if(res.status == 201){
+      if(res.status === 201){
         toast.success('Task added successfully!');
         loadTasks();
       }

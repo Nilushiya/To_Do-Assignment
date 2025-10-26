@@ -7,14 +7,27 @@ const AddTask = ({ onAdd }) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const { keycloak } = useKeycloak();
+  const [errors, setErrors] = useState({});
 
   const handleLogout = () => {
     keycloak.logout();
   };
 
+  const validate = () => {
+    const newErrors = {};
+    if (!title.trim()) {
+      newErrors.title = 'Title is required';
+    }
+    if (!desc.trim()) {
+      newErrors.desc = 'Description is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const submitTask = (e) => {
     e.preventDefault();
-    if (!title.trim()) return;
+    validate();
     onAdd({ title, description: desc });
     setTitle('');
     setDesc('');
@@ -25,18 +38,24 @@ const AddTask = ({ onAdd }) => {
       
       <form onSubmit={submitTask}>
         <h2>Add a Task</h2> 
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Description"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-        />
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          {errors.title && <p className="error-text">{errors.title}</p>}
+        </div>
+
+        <div className="form-group">
+          <textarea
+            placeholder="Description"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+          {errors.desc && <p className="error-text">{errors.desc}</p>}
+        </div>
         <button type="submit">Add</button>
         <div className="logout-section" onClick={handleLogout}>
           <FiLogOut size={22} className="logout-icon" />
